@@ -5,6 +5,7 @@
       function displaycityInfo() {
         var cityName = $(this).attr("data-name")
         $("#cityDisplay").text(cityName)
+        $("#cityDate").text(moment().format('MMMM Do YYYY, h:mm a'))
        
         var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&APPID=ad335f06147c90f98edaa25f1c53d200";
         $.ajax({
@@ -59,7 +60,7 @@
                 var tempF = Math.round(((response.data[0].app_temp) * (9/5) + 32))
                 var tempDiv = $("<div>");
                 $(tempDiv).addClass("dayInfo");
-                $("#day1").text("4 Hours")
+                $("#day1").text("  4 Hours")
                 $(tempDiv).append("Temperature: ").append(tempF).before("<br>");
                 $("#day1").append(tempDiv);
               
@@ -87,7 +88,7 @@
                 var tempF = Math.round(((response.data[20].app_temp) * (9/5) + 32))
                 var tempDiv = $("<div>");
                 $(tempDiv).addClass("dayInfo");
-                $("#day2").text("24 Hours")
+                $("#day2").text("  24 Hours")
                 $(tempDiv).append("Temperature: ").append(tempF).before("<br>");
                 $("#day2").append(tempDiv);
               
@@ -115,7 +116,7 @@
                 var tempF = Math.round(((response.data[44].app_temp) * (9/5) + 32))
                 var tempDiv = $("<div>");
                 $(tempDiv).addClass("dayInfo");
-                $("#day3").text("48 Hours")
+                $("#day3").text("  48 Hours")
                 $(tempDiv).append("Temperature: ").append(tempF).before("<br>");
                 $("#day3").append(tempDiv);
               
