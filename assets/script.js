@@ -1,7 +1,7 @@
       // Initial array of cities
       var cities = ["Charlotte", "New York", "San Diego", "Jacksonville"];
 
-      // Function for dumping the JSON content for each button into the div
+
       function displaycityInfo() {
         var cityName = $(this).attr("data-name")
         $("#cityDisplay").text(cityName)
@@ -35,8 +35,16 @@
             $(descDiv).addClass("respoInfo");
             $(descDiv).append("Description: ").append(JSON.stringify(response.weather[0].description));
             $("#cityInfo").append(descDiv);
-           
-        // =================================================================
+
+            var cloud = response.clouds.all
+            console.log(cloud)
+            if (cloud < 40){
+                $("#cityInfo").prepend("<img src='assets/images/sunny.jpg' style='width: 40px'>")
+            }
+            else if (40 < cloud < 70){
+                $("#cityInfo").prepend("<img src='assets/images/slightly.jpg' style='width: 40px'>")
+            }
+            else {$("#cityInfo").prepend("<img src='assets/images/cloudy.png' style='width: 40px'>")}
         })
     
         apiKey = "686da703dfc347de905a811d9f623386";
@@ -51,54 +59,84 @@
                 var tempF = Math.round(((response.data[0].app_temp) * (9/5) + 32))
                 var tempDiv = $("<div>");
                 $(tempDiv).addClass("dayInfo");
+                $("#day1").text("4 Hours")
                 $(tempDiv).append("Temperature: ").append(tempF).before("<br>");
                 $("#day1").append(tempDiv);
               
                 var uvDiv = $("<div>");
                 $(uvDiv).addClass("dayInfo");
-                $(uvDiv).append("UV: ").append(JSON.stringify(response.data[0].uv)).before("<br>");
+                $(uvDiv).append("UV: ").append(response.data[0].uv).before("<br>");
                 $("#day1").append(uvDiv);
     
                 var windDiv = $("<div>");
                 $(windDiv).addClass("dayInfo");
-                $(windDiv).append("Wind Speed:").append(JSON.stringify(response.data[0].wind_spd)).before("<br>");
+                $(windDiv).append("Wind Speed: ").append(JSON.stringify(response.data[0].wind_spd)).before("<br>");
                 $("#day1").append(windDiv);
+
+                var cloud = response.data[0].clouds
+                if (cloud < 40){
+                    $("#day1").prepend("<img src='assets/images/sunny.jpg' style='width: 40px'>")
+                }
+                else if (40 < cloud < 70){
+                    $("#day1").prepend("<img src='assets/images/slightly.jpg' style='width: 40px'>")
+                }
+                else {$("#day1").prepend("<img src='assets/images/cloudy.png' style='width: 40px'>")}
             }
             function fillDay2(){
                 $("#day2").empty()
-                var tempF = Math.round(((response.data[24].app_temp) * (9/5) + 32))
+                var tempF = Math.round(((response.data[20].app_temp) * (9/5) + 32))
                 var tempDiv = $("<div>");
                 $(tempDiv).addClass("dayInfo");
+                $("#day2").text("24 Hours")
                 $(tempDiv).append("Temperature: ").append(tempF).before("<br>");
                 $("#day2").append(tempDiv);
               
                 var uvDiv = $("<div>");
                 $(uvDiv).addClass("dayInfo");
-                $(uvDiv).append("UV: ").append(JSON.stringify(response.data[24].uv)).before("<br>");
+                $(uvDiv).append("UV: ").append(JSON.stringify(response.data[20].uv)).before("<br>");
                 $("#day2").append(uvDiv);
     
                 var windDiv = $("<div>");
                 $(windDiv).addClass("dayInfo");
-                $(windDiv).append("Wind Speed:").append(JSON.stringify(response.data[24].wind_spd)).before("<br>");
+                $(windDiv).append("Wind Speed: ").append(JSON.stringify(response.data[20].wind_spd)).before("<br>");
                 $("#day2").append(windDiv);
+
+                var cloud = response.data[20].clouds
+                if (cloud < 40){
+                    $("#day2").prepend("<img src='assets/images/sunny.jpg' style='width: 40px'>")
+                }
+                else if (40 < cloud < 70){
+                    $("#day2").prepend("<img src='assets/images/slightly.jpg' style='width: 40px'>")
+                }
+                else {$("#day2").prepend("<img src='assets/images/cloudy.png' style='width: 40px'>")}
             }
             function fillDay3(){
                 $("#day3").empty()
-                var tempF = Math.round(((response.data[47].app_temp) * (9/5) + 32))
+                var tempF = Math.round(((response.data[44].app_temp) * (9/5) + 32))
                 var tempDiv = $("<div>");
                 $(tempDiv).addClass("dayInfo");
+                $("#day3").text("48 Hours")
                 $(tempDiv).append("Temperature: ").append(tempF).before("<br>");
                 $("#day3").append(tempDiv);
               
                 var uvDiv = $("<div>");
                 $(uvDiv).addClass("dayInfo");
-                $(uvDiv).append("UV: ").append(JSON.stringify(response.data[47].uv)).before("<br>");
+                $(uvDiv).append("UV: ").append(JSON.stringify(response.data[44].uv)).before("<br>");
                 $("#day3").append(uvDiv);
     
                 var windDiv = $("<div>");
                 $(windDiv).addClass("dayInfo");
-                $(windDiv).append("Wind Speed:").append(JSON.stringify(response.data[47].wind_spd)).before("<br>");
+                $(windDiv).append("Wind Speed: ").append(JSON.stringify(response.data[44].wind_spd)).before("<br>");
                 $("#day3").append(windDiv);
+
+                var cloud = response.data[44].clouds
+                if (cloud < 40){
+                    $("#day3").prepend("<img src='assets/images/sunny.jpg' style='width: 40px'>")
+                }
+                else if (40 < cloud < 70){
+                    $("#day3").prepend("<img src='assets/images/slightly.jpg' style='width: 40px'>")
+                }
+                else {$("#day3").prepend("<img src='assets/images/cloudy.png' style='width: 40px'>")}
             }
             fillDay1()
             fillDay2()
@@ -109,47 +147,26 @@
 
       
 
-      // Function for displaying city data
+
       function renderButtons() {
-
-        // Deleting the buttons prior to adding new cities
-        // (this is necessary otherwise you will have repeat buttons)
         $("#buttons-view").empty();
-
-        // Looping through the array of cities
         for (var i = 0; i < cities.length; i++) {
-
-          // Then dynamicaly generating buttons for each city in the array
-          // This code $("<button>") is all jQuery needs to create the beginning and end tag. (<button></button>)
           var a = $("<button>");
-          // Adding a class of city to our button
           a.addClass("city");
-          // Adding a data-attribute
           a.attr("data-name", cities[i]);
-          // Providing the initial button text
           a.text(cities[i]);
-          // Adding the button to the buttons-view div
           $("#buttons-view").prepend(a);
         }
       }
 
-      // This function handles events where one button is clicked
       $("#add-city").on("click", function(event) {
         event.preventDefault();
-
-        // This line grabs the input from the textbox
         var city = $("#city-input").val().trim();
-
-        // The city from the textbox is then added to our array
         cities.push(city);
-
-        // Calling renderButtons which handles the processing of our city array
         renderButtons();
 
       });
 
-      // Generic function for displaying the cityInfo
       $(document).on("click", ".city", displaycityInfo);
 
-      // Calling the renderButtons function to display the initial buttons
       renderButtons();

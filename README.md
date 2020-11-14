@@ -23,3 +23,5 @@ THEN I am presented with the last searched city forecast
 
 Utilizing clean and legible code, as well as intergrating API data through weatherbit.io for forecasts, and openweathermap.org for on time data, we have been able to create a page that is responsive, and capable of meeting the needs outlined for us. 
 The site will present as pictured below.
+
+
