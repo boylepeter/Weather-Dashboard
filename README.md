@@ -1,5 +1,7 @@
 # Weather-Dashboard
 
+Given the task of creating a weather app, capable of finding weather data for cities across the world, we were given the following capability requirements and outlines for our project.
+
 AS A traveler
 I WANT to see the weather outlook for multiple cities
 SO THAT I can plan a trip accordingly
@@ -18,4 +20,6 @@ THEN I am again presented with current and future conditions for that city
 WHEN I open the weather dashboard
 THEN I am presented with the last searched city forecast
 
-"http://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&APPID=ad335f06147c90f98edaa25f1c53d200";
+
+Utilizing clean and legible code, as well as intergrating API data through weatherbit.io for forecasts, and openweathermap.org for on time data, we have been able to create a page that is responsive, and capable of meeting the needs outlined for us. 
+The site will present as pictured below.
