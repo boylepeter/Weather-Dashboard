@@ -1,12 +1,15 @@
       // Initial array of cities
       var cities = ["Charlotte", "New York", "San Diego", "Jacksonville"];
 
-
       function displaycityInfo() {
         var cityName = $(this).attr("data-name")
         $("#cityDisplay").text(cityName)
         $("#cityDate").text(moment().format('MMMM Do YYYY, h:mm a'))
-       
+
+        localStorage.setItem("lastCity", cityName)
+        console.log(cityName)
+        //localStorage.getItem("lastCity")
+       //API call for current weather along with population function for data returned
         var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&APPID=ad335f06147c90f98edaa25f1c53d200";
         $.ajax({
         url: queryURL,
@@ -47,7 +50,7 @@
             }
             else {$("#cityInfo").prepend("<img src='assets/images/cloudy.png' style='width: 40px'>")}
         })
-    
+        //Query for forecast as doubling of API calls was not possible.
         apiKey = "686da703dfc347de905a811d9f623386";
         var queryURL= "https://api.weatherbit.io/v2.0/forecast/hourly?city=" + cityName + "&key=" + apiKey +"&hours=48";
         $.ajax({
@@ -68,6 +71,14 @@
                 $(uvDiv).addClass("dayInfo");
                 $(uvDiv).append("UV: ").append(response.data[0].uv).before("<br>");
                 $("#day1").append(uvDiv);
+                var UV = response.data[0].uv
+                if (UV <2){
+                    $(uvDiv).attr("style", "background-color: green")
+                }
+                else if (2 < UV < 7){
+                    $(uvDiv).attr("style", "background-color: yellow")
+                }
+                else {$(uvDiv).attr("style", "background-color: red")}
     
                 var windDiv = $("<div>");
                 $(windDiv).addClass("dayInfo");
@@ -96,7 +107,15 @@
                 $(uvDiv).addClass("dayInfo");
                 $(uvDiv).append("UV: ").append(JSON.stringify(response.data[20].uv)).before("<br>");
                 $("#day2").append(uvDiv);
-    
+                var UV = response.data[20].uv
+                if (UV <2){
+                    $(uvDiv).attr("style", "background-color: green")
+                }
+                else if (2 < UV < 7){
+                    $(uvDiv).attr("style", "background-color: yellow")
+                }
+                else {$(uvDiv).attr("style", "background-color: red")}
+
                 var windDiv = $("<div>");
                 $(windDiv).addClass("dayInfo");
                 $(windDiv).append("Wind Speed: ").append(JSON.stringify(response.data[20].wind_spd)).before("<br>");
@@ -124,6 +143,14 @@
                 $(uvDiv).addClass("dayInfo");
                 $(uvDiv).append("UV: ").append(JSON.stringify(response.data[44].uv)).before("<br>");
                 $("#day3").append(uvDiv);
+                var UV = response.data[44].uv
+                if (UV <2){
+                    $(uvDiv).attr("style", "background-color: green")
+                }
+                else if (2 < UV < 7){
+                    $(uvDiv).attr("style", "background-color: yellow")
+                }
+                else {$(uvDiv).attr("style", "background-color: red")}
     
                 var windDiv = $("<div>");
                 $(windDiv).addClass("dayInfo");
@@ -148,7 +175,7 @@
 
       
 
-
+//create buttons for each item in the cities array after emptying to avoid doubling
       function renderButtons() {
         $("#buttons-view").empty();
         for (var i = 0; i < cities.length; i++) {
@@ -159,15 +186,19 @@
           $("#buttons-view").prepend(a);
         }
       }
-
+//add new city to the array via click on add city button
       $("#add-city").on("click", function(event) {
         event.preventDefault();
         var city = $("#city-input").val().trim();
         cities.push(city);
         renderButtons();
-
       });
 
+
       $(document).on("click", ".city", displaycityInfo);
+
+      //$(document).on("load", displaycityInfo((localStorage.getItem("lastCity")))); attempted recovery of last city cannot be 
+      //accomplished while maintaining data attribute, this makes it unable to return through the displaycityinfo function
+      
 
       renderButtons();
